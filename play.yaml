@@ -1,0 +1,35 @@
+---
+ - hosts: slave
+   remote_user: zaptech
+   become: yes
+   become_method: sudo
+   name: play
+   tasks:
+           - name: Update packages
+             apt: update_cache=yes upgrade=dist
+           - name: Install LAMP
+             apt:
+                     name: "{{ packages }}"
+                     state: present
+             vars:
+                     packages:
+                             - apache2
+                             - php
+                             - mysql-server
+                             - mysql-client
+                             - php-curl
+                             - php-zip
+                             - php-intl
+                             - php-mbstring
+                             - php-xml
+                             - php-gd
+                             - php-soap
+           - name: Editing php.ini file
+             script: test.sh
+           - name: enabled mod re_write
+             apache2_module: name=rewrite state=present
+             notify:
+                     - restart apache2
+   handlers:
+           - name: restart apache2
+             service: name=apache2 state=restarted

@@ -1,22 +1,15 @@
 ---
-<<<<<<< HEAD
- - hosts: khushboo
-=======
  - hosts: mytest
->>>>>>> 17d6787457b40a7a1baecc80f3cbd1ba11c3b7b8
    remote_user: zaptech
    become: yes
    become_method: sudo
    name: play
    tasks:
-<<<<<<< HEAD
            - name: Installing Python-apt package
              apt:
                      name: python3-apt
                      state: present
 
-=======
->>>>>>> 17d6787457b40a7a1baecc80f3cbd1ba11c3b7b8
            - name: Update packages
              apt: update_cache=yes upgrade=dist
            - name: Adding Sublime Key
@@ -86,11 +79,8 @@
                              - net-tools
                              - apt-transport-https
                              - code
-<<<<<<< HEAD
                              - build-essential
                              - openjdk-8-jdk
-=======
->>>>>>> 17d6787457b40a7a1baecc80f3cbd1ba11c3b7b8
 
            - name: Editing php.ini file
              script: test.sh

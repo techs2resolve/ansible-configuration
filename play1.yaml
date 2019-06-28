@@ -1,0 +1,9 @@
+---
+ - hosts: viru
+   remote_user: zaptech
+   become: yes
+   become_method: sudo 
+   name: play1
+   tasks:
+           - name: Install Apache
+             apt: name=klavaro state=latest

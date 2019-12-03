@@ -4,6 +4,9 @@
    become: yes
    become_method: sudo
    name: play
+   vars:
+        NODEJS_VERSION: "12"
+        ansible_distribution_release: "bionic"
    tasks:
            - name: Update packages
              apt: update_cache=yes upgrade=dist
@@ -45,6 +48,29 @@
                      state: present
              become: true
 
+           - name: Adding Skype Key
+             apt_key:
+                    url: https://repo.skype.com/data/SKYPE-GPG-KEY
+                    state: present
+             become: true
+
+           - name: Adding Skype Repo
+             apt_repository:
+                     repo: deb https://repo.skype.com/deb stable main
+                     state: present
+             become: true
+           - name: Adding Nodejs Key
+             apt_key:
+                    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+                    state: present
+             become: true
+           - name: Adding Nodejs Repo
+             apt_repository:
+
+                    repo: deb https://deb.nodesource.com/node_{{ NODEJS_VERSION }}.x {{ ansible_distribution_release }} main
+                    state: present
+             become: true
+
            - name: Install LAMP and Other Softwares
              apt:
                      name: "{{ packages }}"
@@ -74,11 +100,18 @@
                              - net-tools
                              - apt-transport-https
                              - code
+                             - build-essential
+                             - openjdk-8-jdk
+                             - skypeforlinux
+                             - netbeans
+                             - nodejs
 
            - name: Editing php.ini file
              script: test.sh
            - name: Configuring Mysql Credentials
              script: mysql.sh
+           - name: Install Zoom Conferencing Software
+             script: zoom.sh
            - name: enabled mod re_write
              apache2_module: name=rewrite state=present
              notify:

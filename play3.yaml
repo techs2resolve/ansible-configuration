@@ -8,6 +8,11 @@
         NODEJS_VERSION: "12"
         ansible_distribution_release: "bionic"
    tasks:
+           - name: Installing Python-apt package
+             apt:
+                     name: python3-apt
+                     state: present
+
            - name: Update packages
              apt: update_cache=yes upgrade=dist
            - name: Adding Sublime Key
@@ -102,9 +107,12 @@
                              - code
                              - build-essential
                              - openjdk-8-jdk
+<<<<<<< HEAD
                              - skypeforlinux
                              - netbeans
                              - nodejs
+=======
+>>>>>>> 43f47bb9f076d594729119b783a7d60e2c80f74c
 
            - name: Editing php.ini file
              script: test.sh

@@ -1,6 +1,7 @@
 #!/bin/bash
 
-wget https://zoom.us/client/latest/zoom_amd64.deb
-sudo apt install ./zoom_amd64.deb
+wget http://192.168.15.155/zoom_amd64.deb
+sudo apt install -y libxcb-xtest0
+sudo apt install -y ./zoom_amd64.deb
 
 
